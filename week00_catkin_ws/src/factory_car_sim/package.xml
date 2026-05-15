@@ -1,0 +1,41 @@
+﻿<?xml version="1.0"?>
+<package format="2">
+  <name>factory_car_sim</name>
+  <version>0.0.0</version>
+  <description>The factory_car_sim package</description>
+
+  <maintainer email="zfy@todo.todo">zfy</maintainer>
+  <license>TODO</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>gazebo_plugins</build_depend>
+  <build_depend>gazebo_ros</build_depend>
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>rospy</build_depend>
+  <build_depend>tf2_ros</build_depend>
+  <build_depend>urdf</build_depend>
+  <build_depend>xacro</build_depend>
+
+  <build_export_depend>gazebo_plugins</build_export_depend>
+  <build_export_depend>gazebo_ros</build_export_depend>
+  <build_export_depend>geometry_msgs</build_export_depend>
+  <build_export_depend>roscpp</build_export_depend>
+  <build_export_depend>rospy</build_export_depend>
+  <build_export_depend>tf2_ros</build_export_depend>
+  <build_export_depend>urdf</build_export_depend>
+  <build_export_depend>xacro</build_export_depend>
+
+  <exec_depend>gazebo_plugins</exec_depend>
+  <exec_depend>gazebo_ros</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>roscpp</exec_depend>
+  <exec_depend>rospy</exec_depend>
+  <exec_depend>tf2_ros</exec_depend>
+  <exec_depend>urdf</exec_depend>
+  <exec_depend>xacro</exec_depend>
+
+  <export>
+  </export>
+</package>

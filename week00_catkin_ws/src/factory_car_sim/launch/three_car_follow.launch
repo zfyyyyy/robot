@@ -1,0 +1,42 @@
+<launch>
+  <include file="$(find gazebo_ros)/launch/empty_world.launch"/>
+
+  <param name="car1_description" command="$(find xacro)/xacro $(find factory_car_sim)/urdf/car.xacro prefix:=car1_ robot_ns:=/car1"/>
+  <param name="car2_description" command="$(find xacro)/xacro $(find factory_car_sim)/urdf/car.xacro prefix:=car2_ robot_ns:=/car2"/>
+  <param name="car3_description" command="$(find xacro)/xacro $(find factory_car_sim)/urdf/car.xacro prefix:=car3_ robot_ns:=/car3"/>
+
+  <node name="spawn_car1" pkg="gazebo_ros" type="spawn_model" args="-urdf -model car1 -param car1_description -x 0.0 -y 0.0 -z 0.05"/>
+  <node name="spawn_car2" pkg="gazebo_ros" type="spawn_model" args="-urdf -model car2 -param car2_description -x -0.8 -y 0.0 -z 0.05"/>
+  <node name="spawn_car3" pkg="gazebo_ros" type="spawn_model" args="-urdf -model car3 -param car3_description -x -1.6 -y 0.0 -z 0.05"/>
+
+  <!-- 统一坐标树 -->
+  <node pkg="tf2_ros" type="static_transform_publisher" name="map_to_world" args="0 0 0 0 0 0 map world"/>
+  <node pkg="tf2_ros" type="static_transform_publisher" name="map_to_car1_odom" args="0.0 0.0 0 0 0 0 map car1_odom"/>
+  <node pkg="tf2_ros" type="static_transform_publisher" name="map_to_car2_odom" args="-0.8 0.0 0 0 0 0 map car2_odom"/>
+  <node pkg="tf2_ros" type="static_transform_publisher" name="map_to_car3_odom" args="-1.6 0.0 0 0 0 0 map car3_odom"/>
+
+  <node pkg="factory_car_sim" type="wasd_teleop.py" name="wasd_teleop" output="screen"/>
+  <node pkg="factory_car_sim" type="model_tf_broadcaster.py" name="model_tf_broadcaster" output="screen"/>
+
+  <node pkg="factory_car_sim" type="tf_chain_follower.py" name="car2_follow_car1" output="screen">
+    <param name="leader_frame" value="car1_world"/>
+    <param name="follower_frame" value="car2_world"/>
+    <param name="cmd_topic" value="/car2/cmd_vel"/>
+    <param name="linear_gain" value="1.0"/>
+    <param name="angular_gain" value="3.0"/>
+    <param name="max_linear" value="1.2"/>
+    <param name="max_angular" value="2.0"/>
+    <param name="stop_distance" value="0.25"/>
+  </node>
+
+  <node pkg="factory_car_sim" type="tf_chain_follower.py" name="car3_follow_car2" output="screen">
+    <param name="leader_frame" value="car2_world"/>
+    <param name="follower_frame" value="car3_world"/>
+    <param name="cmd_topic" value="/car3/cmd_vel"/>
+    <param name="linear_gain" value="1.0"/>
+    <param name="angular_gain" value="3.0"/>
+    <param name="max_linear" value="1.2"/>
+    <param name="max_angular" value="2.0"/>
+    <param name="stop_distance" value="0.25"/>
+  </node>
+</launch>

@@ -1,0 +1,4 @@
+<launch>
+  <include file="$(find factory_car_sim)/launch/load_factory.launch"/>
+  <node pkg="factory_car_sim" type="wasd_teleop.py" name="wasd_teleop" output="screen"/>
+</launch>

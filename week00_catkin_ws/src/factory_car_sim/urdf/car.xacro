@@ -1,0 +1,85 @@
+﻿<?xml version="1.0"?>
+<robot name="my_car" xmlns:xacro="http://wiki.ros.org/xacro">
+  <xacro:arg name="prefix" default=""/>
+  <xacro:arg name="robot_ns" default="/"/>
+  <xacro:property name="prefix" value="$(arg prefix)"/>
+  <xacro:property name="robot_ns" value="$(arg robot_ns)"/>
+
+  <material name="blue"><color rgba="0 0 0.8 1"/></material>
+  <material name="black"><color rgba="0.1 0.1 0.1 1"/></material>
+
+  <link name="${prefix}base_link">
+    <visual><geometry><box size="0.2 0.12 0.07"/></geometry><material name="blue"/></visual>
+    <collision><geometry><box size="0.2 0.12 0.07"/></geometry></collision>
+    <inertial><mass value="0.5"/><inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/></inertial>
+  </link>
+
+  <link name="${prefix}left_wheel"><visual><geometry><cylinder radius="0.03" length="0.02"/></geometry><material name="black"/></visual></link>
+  <joint name="${prefix}left_wheel_joint" type="continuous">
+    <parent link="${prefix}base_link"/><child link="${prefix}left_wheel"/><origin xyz="-0.05 0.07 -0.03" rpy="1.5708 0 0"/><axis xyz="0 0 1"/>
+  </joint>
+
+  <link name="${prefix}right_wheel"><visual><geometry><cylinder radius="0.03" length="0.02"/></geometry><material name="black"/></visual></link>
+  <joint name="${prefix}right_wheel_joint" type="continuous">
+    <parent link="${prefix}base_link"/><child link="${prefix}right_wheel"/><origin xyz="-0.05 -0.07 -0.03" rpy="-1.5708 0 0"/><axis xyz="0 0 1"/>
+  </joint>
+
+  <link name="${prefix}laser_link"/>
+  <joint name="${prefix}laser_joint" type="fixed"><parent link="${prefix}base_link"/><child link="${prefix}laser_link"/><origin xyz="0.08 0 0.02" rpy="0 0 0"/></joint>
+
+  <link name="${prefix}camera_link"/>
+  <joint name="${prefix}camera_joint" type="fixed"><parent link="${prefix}base_link"/><child link="${prefix}camera_link"/><origin xyz="0.06 0 0.03" rpy="0 0 0"/></joint>
+
+  <link name="${prefix}kinect_link"/>
+  <joint name="${prefix}kinect_joint" type="fixed"><parent link="${prefix}base_link"/><child link="${prefix}kinect_link"/><origin xyz="0.03 0 0.04" rpy="0 0 0"/></joint>
+
+  <gazebo>
+    <plugin name="${prefix}planar_move" filename="libgazebo_ros_planar_move.so">
+      <robotNamespace>${robot_ns}</robotNamespace>
+      <commandTopic>cmd_vel</commandTopic>
+      <odometryTopic>odom</odometryTopic>
+      <odometryFrame>${prefix}odom</odometryFrame>
+      <robotBaseFrame>${prefix}base_link</robotBaseFrame>
+      <publishTF>true</publishTF>
+      <updateRate>50.0</updateRate>
+    </plugin>
+  </gazebo>
+
+  <gazebo reference="${prefix}laser_link">
+    <sensor type="ray" name="${prefix}laser_sensor">
+      <ray><scan><horizontal><samples>360</samples><min_angle>-3.14</min_angle><max_angle>3.14</max_angle></horizontal></scan><range><min>0.12</min><max>8.0</max></range></ray>
+      <plugin name="${prefix}laser_plugin" filename="libgazebo_ros_laser.so">
+        <robotNamespace>${robot_ns}</robotNamespace>
+        <topicName>scan</topicName>
+        <frameName>${prefix}base_link</frameName>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+  <gazebo reference="${prefix}camera_link">
+    <sensor type="camera" name="${prefix}camera_sensor">
+      <camera><image><width>640</width><height>480</height><format>R8G8B8</format></image></camera>
+      <plugin name="${prefix}camera_plugin" filename="libgazebo_ros_camera.so">
+        <robotNamespace>${robot_ns}</robotNamespace>
+        <cameraName>camera</cameraName>
+        <imageTopicName>image_raw</imageTopicName>
+        <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+        <frameName>${prefix}base_link</frameName>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+  <gazebo reference="${prefix}kinect_link">
+    <sensor type="depth" name="${prefix}kinect_sensor">
+      <camera><image><width>640</width><height>480</height><format>R8G8B8</format></image></camera>
+      <plugin name="${prefix}kinect_plugin" filename="libgazebo_ros_openni_kinect.so">
+        <robotNamespace>${robot_ns}</robotNamespace>
+        <cameraName>kinect</cameraName>
+        <imageTopicName>rgb/image_raw</imageTopicName>
+        <depthImageTopicName>depth/image_raw</depthImageTopicName>
+        <pointCloudTopicName>depth/points</pointCloudTopicName>
+        <frameName>${prefix}base_link</frameName>
+      </plugin>
+    </sensor>
+  </gazebo>
+</robot>
