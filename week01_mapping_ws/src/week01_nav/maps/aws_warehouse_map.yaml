@@ -1,0 +1,11 @@
+# map_server 地图描述文件：把 pgm 图片解释成 ROS OccupancyGrid。
+image: aws_warehouse_map.pgm
+# 分辨率：每个像素代表 0.05 米。
+resolution: 0.050000
+# 地图左下角在 map 坐标系中的位姿 [x, y, yaw]。
+origin: [-20.000000, -20.000000, 0.000000]
+# 0 表示图片黑色为障碍、白色为空闲。
+negate: 0
+# 占用/空闲阈值，像素概率高于 occupied_thresh 认为是障碍。
+occupied_thresh: 0.65
+free_thresh: 0.196

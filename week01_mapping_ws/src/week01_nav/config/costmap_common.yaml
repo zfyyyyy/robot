@@ -1,0 +1,18 @@
+# 全局代价地图和局部代价地图共用参数。
+# 激光发现障碍物的最大距离，以及清除自由空间的最大射线距离。
+obstacle_range: 2.5
+raytrace_range: 3.0
+# 机器人底盘轮廓，单位米；规划器会避免该轮廓碰到障碍物。
+footprint: [[0.15,0.15],[0.15,-0.15],[-0.15,-0.15],[-0.15,0.15]]
+# 障碍物膨胀半径和衰减系数，决定机器人离障碍物保持多远。
+inflation_radius: 0.35
+cost_scaling_factor: 3.0
+# 障碍物来源为激光雷达 /scan。
+observation_sources: scan
+scan:
+  sensor_frame: base_scan
+  data_type: LaserScan
+  topic: /scan
+  # marking 表示把激光打到的点标成障碍，clearing 表示清除射线路径上的空闲区域。
+  marking: true
+  clearing: true

@@ -1,0 +1,11 @@
+# 全局代价地图：用于在整张静态地图上规划从当前位置到目标点的大路径。
+global_costmap:
+  # 全局规划基于 map 坐标系，机器人基准坐标系是 base_link。
+  global_frame: map
+  robot_base_frame: base_link
+  # 代价地图更新和发布频率。
+  update_frequency: 3.0
+  publish_frequency: 1.0
+  # 使用 map_server 发布的静态地图，不跟随机器人滚动。
+  static_map: true
+  rolling_window: false

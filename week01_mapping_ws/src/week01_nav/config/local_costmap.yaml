@@ -1,0 +1,15 @@
+# 局部代价地图：围绕机器人滚动，用于短距离避障和局部轨迹生成。
+local_costmap:
+  # 局部规划通常基于 odom，避免 AMCL 在 map 中微调时造成局部路径跳动。
+  global_frame: odom
+  robot_base_frame: base_link
+  # 局部地图刷新更快，方便及时响应近处障碍物。
+  update_frequency: 5.0
+  publish_frequency: 2.0
+  # 不使用整张静态地图，而是随机器人移动的窗口。
+  static_map: false
+  rolling_window: true
+  # 局部窗口大小和分辨率，单位米/米每格。
+  width: 6.0
+  height: 6.0
+  resolution: 0.05

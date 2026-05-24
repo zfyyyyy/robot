@@ -1,0 +1,37 @@
+<launch>
+  <!-- 一键建图：启动仓库仿真 + TurtleBot3 + gmapping + RViz/键盘遥控。 -->
+  <arg name="gui" default="true"/>
+  <arg name="use_rviz" default="true"/>
+  <arg name="use_teleop" default="false"/>
+  <arg name="use_sim_time" default="true"/>
+  <!-- 机器人出生点，单位米/弧度，可用于换一个起始位置建图。 -->
+  <arg name="x" default="0.0"/>
+  <arg name="y" default="0.0"/>
+  <arg name="z" default="0.05"/>
+  <arg name="yaw" default="0.0"/>
+
+  <!-- 先打开 Gazebo 仓库世界，并把 TurtleBot3 放进去。 -->
+  <include file="$(find week01_nav)/launch/warehouse_with_tb3.launch">
+    <arg name="gui" value="$(arg gui)"/>
+    <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+    <arg name="x" value="$(arg x)"/>
+    <arg name="y" value="$(arg y)"/>
+    <arg name="z" value="$(arg z)"/>
+    <arg name="yaw" value="$(arg yaw)"/>
+  </include>
+
+  <!-- 再启动 gmapping，实时生成占据栅格地图。 -->
+  <include file="$(find week01_nav)/launch/gmapping_bringup.launch">
+    <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+  </include>
+
+  <!-- RViz 用于查看 /map、/scan、TF 和机器人位置。 -->
+  <group if="$(arg use_rviz)">
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find week01_nav)/rviz/mapping_nav.rviz"/>
+  </group>
+
+  <!-- 可选键盘遥控；建图时打开它，边开车边补全地图。 -->
+  <group if="$(arg use_teleop)">
+    <node pkg="turtlebot3_teleop" type="turtlebot3_teleop_key" name="tb3_teleop" output="screen"/>
+  </group>
+</launch>

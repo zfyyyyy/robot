@@ -1,0 +1,31 @@
+<launch>
+  <!-- 仿真环境入口：启动 AWS 小仓库 Gazebo 世界，并生成 TurtleBot3。 -->
+  <arg name="gui" default="true"/>
+  <arg name="use_sim_time" default="true"/>
+  <!-- 机器人出生位姿，便于测试不同初始位置。 -->
+  <arg name="x" default="0.0"/>
+  <arg name="y" default="0.0"/>
+  <arg name="z" default="0.05"/>
+  <arg name="yaw" default="0.0"/>
+  <arg name="robot_name" default="turtlebot3_burger"/>
+
+  <!-- TurtleBot3 包通过该环境变量选择 burger/waffle 等模型。 -->
+  <env name="TURTLEBOT3_MODEL" value="burger"/>
+  <param name="use_sim_time" value="$(arg use_sim_time)"/>
+
+  <!-- 加载 AWS RoboMaker 小仓库世界，作为建图和导航测试场景。 -->
+  <include file="$(find aws_robomaker_small_warehouse_world)/launch/small_warehouse.launch">
+    <arg name="gui" value="$(arg gui)"/>
+  </include>
+
+  <!-- xacro 生成机器人 URDF，robot_state_publisher 会用它发布 TF。 -->
+  <param name="robot_description"
+         command="$(find xacro)/xacro '$(find turtlebot3_description)/urdf/turtlebot3_burger.urdf.xacro'"/>
+
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher"/>
+
+  <!-- 将机器人模型插入 Gazebo，-Y 是绕 z 轴的初始朝向。 -->
+  <node pkg="gazebo_ros" type="spawn_model" name="spawn_tb3"
+        args="-urdf -model $(arg robot_name) -param robot_description -x $(arg x) -y $(arg y) -z $(arg z) -Y $(arg yaw)"
+        output="screen"/>
+</launch>

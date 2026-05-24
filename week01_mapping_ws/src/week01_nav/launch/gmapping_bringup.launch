@@ -1,0 +1,34 @@
+<launch>
+  <!-- 建图入口：启动 slam_gmapping，把 /scan + odom + TF 融合成 /map。 -->
+  <arg name="use_sim_time" default="true"/>
+  <!-- 激光雷达话题，TurtleBot3 仿真通常是 /scan。 -->
+  <arg name="scan_topic" default="/scan"/>
+  <!-- 机器人底盘和里程计坐标系，需要与 URDF/TF 保持一致。 -->
+  <arg name="base_frame" default="base_footprint"/>
+  <arg name="odom_frame" default="odom"/>
+
+  <!-- Gazebo 仿真必须使用仿真时钟，否则 TF 和传感器时间会对不上。 -->
+  <param name="use_sim_time" value="$(arg use_sim_time)"/>
+
+  <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" output="screen">
+    <!-- 把 gmapping 默认订阅的 scan 重映射到实际激光话题。 -->
+    <remap from="scan" to="$(arg scan_topic)"/>
+    <param name="base_frame" value="$(arg base_frame)"/>
+    <param name="odom_frame" value="$(arg odom_frame)"/>
+    <!-- 地图边界，单位米；仓库环境较大，所以给到 40m x 40m。 -->
+    <param name="xmin" value="-20.0"/>
+    <param name="ymin" value="-20.0"/>
+    <param name="xmax" value="20.0"/>
+    <param name="ymax" value="20.0"/>
+    <!-- 地图分辨率：0.05 表示每个像素代表 5cm。 -->
+    <param name="delta" value="0.05"/>
+    <!-- 机器人移动/转动/时间达到阈值后才更新地图，降低计算量。 -->
+    <param name="linearUpdate" value="0.20"/>
+    <param name="angularUpdate" value="0.10"/>
+    <param name="temporalUpdate" value="0.50"/>
+    <!-- 粒子数越大定位建图越稳，但 CPU 开销越大。 -->
+    <param name="particles" value="80"/>
+    <!-- 扫描匹配最低得分，低于该值时本次匹配可信度不足。 -->
+    <param name="minimumScore" value="80"/>
+  </node>
+</launch>

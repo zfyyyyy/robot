@@ -1,0 +1,16 @@
+# move_base 默认局部规划器 TrajectoryPlannerROS 的参数。
+TrajectoryPlannerROS:
+  # 最大/最小前进速度，单位 m/s。
+  max_vel_x: 0.55
+  min_vel_x: 0.08
+  # 最大角速度和原地旋转最小角速度，单位 rad/s。
+  max_vel_theta: 1.2
+  min_in_place_vel_theta: 0.35
+  # 线加速度和角加速度上限，影响起停和转弯的灵敏度。
+  acc_lim_x: 1.8
+  acc_lim_theta: 2.5
+  # 到达目标时允许的角度/位置误差。
+  yaw_goal_tolerance: 0.15
+  xy_goal_tolerance: 0.20
+  # TurtleBot3 是差速车，不能横向平移。
+  holonomic_robot: false

@@ -1,0 +1,133 @@
+Panels:
+  - Class: rviz/Displays
+    Name: Displays
+  - Class: rviz/Selection
+    Name: Selection
+  - Class: rviz/Tool Properties
+    Name: Tool Properties
+  - Class: rviz/Views
+    Name: Views
+  - Class: rviz/Time
+    Name: Time
+    SyncMode: 0
+    SyncSource: LaserScan
+Visualization Manager:
+  Class: ""
+  Displays:
+    - Class: rviz/Grid
+      Enabled: true
+      Name: 00_网格
+      Plane: XY
+      Plane Cell Count: 30
+      Cell Size: 1
+      Color: 90; 90; 90
+      Reference Frame: <Fixed Frame>
+      Value: true
+    - Class: rviz/Map
+      Enabled: true
+      Name: 01_静态地图_map
+      Topic: /map
+      Alpha: 0.75
+      Color Scheme: map
+      Draw Behind: true
+      Value: true
+    - Class: rviz/Map
+      Enabled: true
+      Name: 02_全局代价地图_global_costmap
+      Topic: /move_base/global_costmap/costmap
+      Alpha: 0.55
+      Color Scheme: costmap
+      Draw Behind: false
+      Value: true
+    - Class: rviz/Map
+      Enabled: true
+      Name: 03_局部代价地图_local_costmap
+      Topic: /move_base/local_costmap/costmap
+      Alpha: 0.75
+      Color Scheme: costmap
+      Draw Behind: false
+      Value: true
+    - Class: rviz/LaserScan
+      Enabled: true
+      Name: 04_激光雷达_scan
+      Topic: /scan
+      Size (Pixels): 4
+      Style: Flat Squares
+      Color: 255; 40; 40
+      Use rainbow: false
+      Value: true
+    - Class: rviz/PoseArray
+      Enabled: true
+      Name: 05_AMCL粒子云_particlecloud
+      Topic: /particlecloud
+      Color: 0; 170; 255
+      Arrow Length: 0.3
+      Value: true
+    - Class: rviz/Path
+      Enabled: true
+      Name: 06_全局规划路径_NavfnROS
+      Topic: /move_base/NavfnROS/plan
+      Color: 0; 255; 0
+      Line Style: Lines
+      Line Width: 0.06
+      Value: true
+    - Class: rviz/Path
+      Enabled: true
+      Name: 07_局部规划路径_TrajectoryPlannerROS
+      Topic: /move_base/TrajectoryPlannerROS/local_plan
+      Color: 255; 230; 0
+      Line Style: Lines
+      Line Width: 0.08
+      Value: true
+    - Class: rviz/Polygon
+      Enabled: true
+      Name: 08_机器人局部footprint
+      Topic: /move_base/local_costmap/footprint
+      Color: 255; 120; 0
+      Value: true
+    - Class: rviz/RobotModel
+      Enabled: true
+      Name: 09_机器人模型
+      Robot Description: robot_description
+      TF Prefix: ""
+      Update Interval: 0
+      Value: true
+    - Class: rviz/TF
+      Enabled: true
+      Name: 10_TF坐标树
+      Show Arrows: true
+      Show Axes: true
+      Show Names: false
+      Marker Scale: 0.35
+      Value: true
+  Enabled: true
+  Global Options:
+    Background Color: 35; 35; 35
+    Fixed Frame: map
+    Frame Rate: 30
+  Name: root
+  Tools:
+    - Class: rviz/Interact
+    - Class: rviz/MoveCamera
+    - Class: rviz/Select
+    - Class: rviz/FocusCamera
+    - Class: rviz/Measure
+    - Class: rviz/SetInitialPose
+      Topic: /initialpose
+    - Class: rviz/SetGoal
+      Topic: /move_base_simple/goal
+    - Class: rviz/PublishPoint
+      Topic: /clicked_point
+      Single click: true
+  Views:
+    Current:
+      Class: rviz/TopDownOrtho
+      Name: 俯视导航调试
+      Target Frame: map
+      Scale: 22
+      Angle: 0
+      X: 0
+      Y: 0
+Window Geometry:
+  Height: 920
+  Width: 1500

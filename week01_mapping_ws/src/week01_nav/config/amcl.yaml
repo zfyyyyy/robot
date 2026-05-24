@@ -1,0 +1,19 @@
+# AMCL 蒙特卡洛定位参数：用于在已有地图上估计机器人位姿。
+# 粒子数量范围。粒子越多定位越稳，计算量也越大。
+min_particles: 500
+max_particles: 2000
+# KLD 自适应采样参数，控制粒子数调整的误差和置信度。
+kld_err: 0.05
+kld_z: 0.99
+# 机器人移动超过这些距离/角度后，AMCL 才使用新激光更新定位。
+update_min_d: 0.1
+update_min_a: 0.1
+# TF 容忍时间，避免仿真中轻微时间延迟导致 TF 查询失败。
+transform_tolerance: 0.5
+# 差速底盘里程计模型，适合 TurtleBot3 burger。
+odom_model_type: diff
+# 里程计噪声系数：旋转/平移误差越大，这些值通常要调大。
+odom_alpha1: 0.2
+odom_alpha2: 0.2
+odom_alpha3: 0.2
+odom_alpha4: 0.2

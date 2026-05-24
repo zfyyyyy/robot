@@ -1,0 +1,35 @@
+<launch>
+  <!-- 导航入口：加载静态地图，启动 AMCL 定位和 move_base 路径规划。 -->
+  <arg name="map_file" default="$(find aws_robomaker_small_warehouse_world)/maps/005/map.yaml"/>
+  <arg name="use_rviz" default="true"/>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="rviz_config" default="$(find week01_nav)/rviz/mapping_nav.rviz"/>
+
+  <!-- Gazebo 仿真中必须使用 /clock。真实机器人运行时可改为 false。 -->
+  <param name="use_sim_time" value="$(arg use_sim_time)"/>
+
+  <!-- map_server 读取 pgm/yaml 地图，并发布 /map。 -->
+  <node pkg="map_server" type="map_server" name="map_server" args="$(arg map_file)" output="screen"/>
+
+  <!-- AMCL 根据激光、地图、里程计估计机器人在 map 中的位置。 -->
+  <node pkg="amcl" type="amcl" name="amcl" output="screen">
+    <rosparam file="$(find week01_nav)/config/amcl.yaml" command="load"/>
+  </node>
+
+  <!-- move_base 负责全局路径规划、局部避障和速度指令输出。 -->
+  <node pkg="move_base" type="move_base" name="move_base" output="screen">
+    <!-- 全局/局部代价地图共享的机器人尺寸、激光障碍物、膨胀半径等参数。 -->
+    <rosparam file="$(find week01_nav)/config/costmap_common.yaml" command="load" ns="global_costmap"/>
+    <rosparam file="$(find week01_nav)/config/costmap_common.yaml" command="load" ns="local_costmap"/>
+    <!-- 分别加载全局静态地图和局部滚动窗口配置。 -->
+    <rosparam file="$(find week01_nav)/config/global_costmap.yaml" command="load"/>
+    <rosparam file="$(find week01_nav)/config/local_costmap.yaml" command="load"/>
+    <!-- 加载局部轨迹规划器的速度、加速度和目标容差参数。 -->
+    <rosparam file="$(find week01_nav)/config/base_local_planner.yaml" command="load"/>
+  </node>
+
+  <!-- RViz 用来发 2D Nav Goal、查看地图、路径、代价地图和定位粒子。 -->
+  <group if="$(arg use_rviz)">
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(arg rviz_config)"/>
+  </group>
+</launch>
