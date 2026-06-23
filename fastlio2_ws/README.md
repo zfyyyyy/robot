@@ -96,7 +96,7 @@ $$
 离散时间下，一个简单的一阶积分形式可以写成：
 
 $$
-R_{k+1} = R_k \operatorname{Exp}\left((\omega_m - b_g)\Delta t\right)
+R_{k+1} = R_k \mathrm{Exp}\left((\omega_m - b_g)\Delta t\right)
 $$
 
 $$
