@@ -1,0 +1,35 @@
+common:
+    lid_topic:  "/livox/lidar"       # Livox Horizon 点云输入话题，消息类型通常为 livox_ros_driver/CustomMsg。
+    imu_topic:  "/livox/imu"         # IMU 输入话题，提供角速度和加速度数据。
+    time_sync_en: false               # 简易软件时间同步开关；已有外部同步时不要启用。
+    time_offset_lidar_to_imu: 0.0     # 雷达与 IMU 时间戳固定偏移，单位为秒，应使用专门工具标定。
+                                      # 该值始终生效；不知道准确偏移时保持为 0.0。
+
+preprocess:
+    lidar_type: 1                     # 点云解析类型：1 = Livox，2 = Velodyne，3 = Ouster，4 = MARSIM。
+    scan_line:  6                     # Horizon 使用的扫描线配置，必须与实际设备和驱动消息匹配。
+    blind: 4                          # 近距离盲区，单位为米；小于该距离的点不会参与后续处理。
+
+mapping:
+    acc_cov: 0.1                      # 加速度计过程噪声参数，建议依据 IMU 噪声分析而不是凭地图观感修改。
+    gyr_cov: 0.1                      # 陀螺仪过程噪声参数，设置不当可能导致姿态抖动或过度信任 IMU。
+    b_acc_cov: 0.0001                 # 加速度计零偏随机游走参数。
+    b_gyr_cov: 0.0001                 # 陀螺仪零偏随机游走参数。
+    fov_degree:    100                # 局部地图管理采用的雷达视场角，单位为度。
+    det_range:     260.0              # 局部地图管理采用的有效探测范围，单位为米。
+    extrinsic_est_en:  true           # 是否在线估计雷达与 IMU 外参；启用时需要合理初值和充分运动激励。
+    extrinsic_T: [ 0.05512, 0.02226, -0.0297 ]  # 雷达到 IMU 的平移外参 [x, y, z]，单位为米。
+    extrinsic_R: [ 1, 0, 0,                        # 雷达到 IMU 的旋转矩阵，按行排列。
+                   0, 1, 0,
+                   0, 0, 1]
+
+publish:
+    path_en:  false                   # 是否发布 /path 估计轨迹。
+    scan_publish_en:  true            # 是否发布全局坐标系下的配准点云。
+    dense_publish_en: true            # 是否发布稠密点云；关闭可减少发布点数和显示负担。
+    scan_bodyframe_pub_en: true       # 是否发布 IMU 机体坐标系下的当前配准扫描。
+
+pcd_save:
+    pcd_save_en: true                 # 是否保存累计 PCD 地图。
+    interval: -1                      # 每个文件保存的雷达帧数；-1 表示全部帧保存到一个文件。
+                                      # 大型数据集建议设置正数分段保存，避免内存不足。

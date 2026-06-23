@@ -1,0 +1,186 @@
+Panels:
+  - Class: rviz/Displays
+    Help Height: 78
+    Name: Displays
+    Property Tree Widget:
+      Expanded:
+        - /Global Options1
+        - /Live cloud1
+        - /Saved PCD map1
+        - /Path1
+        - /Odometry1
+      Splitter Ratio: 0.5
+    Tree Height: 650
+  - Class: rviz/Views
+    Expanded:
+      - /Current View1
+    Name: Views
+    Splitter Ratio: 0.5
+  - Class: rviz/Time
+    Experimental: false
+    Name: Time
+    SyncMode: 0
+    SyncSource: Live cloud
+Preferences:
+  PromptSaveOnExit: false
+Toolbars:
+  toolButtonStyle: 2
+Visualization Manager:
+  Class: ""
+  Displays:
+    - Class: rviz/Grid
+      Name: Grid
+      Enabled: true
+      Value: true
+      Alpha: 0.5
+      Cell Size: 10
+      Plane: XY
+      Plane Cell Count: 80
+      Color: 80; 80; 80
+      Line Style:
+        Value: Lines
+        Line Width: 0.03
+      Reference Frame: <Fixed Frame>
+    - Class: rviz/Axes
+      Name: Axes
+      Enabled: true
+      Value: true
+      Length: 5
+      Radius: 0.25
+      Reference Frame: <Fixed Frame>
+    - Class: rviz/PointCloud2
+      Name: Live cloud
+      Enabled: true
+      Value: true
+      Topic: /cloud_registered
+      Queue Size: 10
+      Unreliable: false
+      Selectable: true
+      Position Transformer: XYZ
+      Color Transformer: FlatColor
+      Color: 255; 255; 255
+      Alpha: 1
+      Style: Points
+      Size (Pixels): 3
+      Size (m): 0.08
+      Decay Time: 30
+      Use Fixed Frame: true
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Value: true
+        Min Value: -10
+        Max Value: 10
+      Axis: Z
+      Channel Name: intensity
+      Use rainbow: true
+      Invert Rainbow: false
+      Min Color: 0; 0; 0
+      Max Color: 255; 255; 255
+    - Class: rviz/PointCloud2
+      Name: Saved PCD map
+      Enabled: true
+      Value: true
+      Topic: /cloud_pcd_display
+      Queue Size: 10
+      Unreliable: false
+      Selectable: true
+      Position Transformer: XYZ
+      Color Transformer: FlatColor
+      Color: 80; 255; 120
+      Alpha: 1
+      Style: Points
+      Size (Pixels): 4
+      Size (m): 0.06
+      Decay Time: 0
+      Use Fixed Frame: true
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Value: true
+        Min Value: -10
+        Max Value: 10
+      Axis: Z
+      Channel Name: intensity
+      Use rainbow: true
+      Invert Rainbow: false
+      Min Color: 0; 0; 0
+      Max Color: 255; 255; 255
+    - Class: rviz/Path
+      Name: Path
+      Enabled: true
+      Value: true
+      Topic: /path
+      Color: 255; 60; 60
+      Alpha: 1
+      Buffer Length: 1
+      Line Style: Lines
+      Line Width: 0.3
+      Pose Style: None
+      Radius: 0.03
+      Offset:
+        X: 0
+        Y: 0
+        Z: 0
+    - Class: rviz/Odometry
+      Name: Odometry
+      Enabled: true
+      Value: true
+      Topic: /Odometry
+      Keep: 20
+      Position Tolerance: 0.001
+      Angle Tolerance: 0.001
+      Shape:
+        Value: Arrow
+        Color: 255; 180; 0
+        Alpha: 1
+        Shaft Length: 1
+        Shaft Radius: 0.08
+        Head Length: 0.35
+        Head Radius: 0.2
+      Covariance:
+        Value: false
+  Enabled: true
+  Global Options:
+    Fixed Frame: camera_init
+    Background Color: 0; 0; 0
+    Default Light: true
+    Frame Rate: 30
+  Name: root
+  Tools:
+    - Class: rviz/Interact
+      Hide Inactive Objects: true
+    - Class: rviz/MoveCamera
+    - Class: rviz/Select
+    - Class: rviz/FocusCamera
+    - Class: rviz/Measure
+    - Class: rviz/SetInitialPose
+      Topic: /initialpose
+    - Class: rviz/SetGoal
+      Topic: /move_base_simple/goal
+    - Class: rviz/PublishPoint
+      Topic: /clicked_point
+  Value: true
+  Views:
+    Current:
+      Class: rviz/Orbit
+      Name: Current View
+      Target Frame: <Fixed Frame>
+      Distance: 380
+      Pitch: 1.2
+      Yaw: 0
+      Focal Point:
+        X: 152.058
+        Y: 28.638
+        Z: 24.081
+      Focal Shape Fixed Size: true
+      Focal Shape Size: 0.05
+      Near Clip Distance: 0.1
+      Invert Z Axis: false
+      Value: Orbit (rviz)
+    Saved: ~
+Window Geometry:
+  Height: 950
+  Width: 1500
+  X: 50
+  Y: 30
+  Hide Left Dock: false
+  Hide Right Dock: false

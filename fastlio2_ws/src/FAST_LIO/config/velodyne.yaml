@@ -1,0 +1,38 @@
+common:
+    lid_topic:  "/velodyne_points"  # Velodyne 驱动发布的 PointCloud2 点云话题。
+    imu_topic:  "/imu/data"         # 与 Velodyne 配套使用的外部 IMU 话题。
+    time_sync_en: false              # 简易软件时间同步开关；具有硬件同步或已标定时间时保持关闭。
+    time_offset_lidar_to_imu: 0.0    # 雷达与 IMU 时间戳固定偏移，单位为秒；未知时保持为 0.0。
+                                         # 该值始终参与时间修正，错误偏移在快速转弯时尤其容易造成重影。
+
+preprocess:
+    lidar_type: 2                    # 点云解析类型 2 表示 Velodyne PointCloud2 数据。
+    scan_line: 32                    # 垂直扫描通道数，此处对应 32 线雷达，必须与实际型号一致。
+    scan_rate: 10                    # 雷达完整扫描频率，仅 Velodyne 需要设置，单位为 Hz。
+    timestamp_unit: 2                # PointCloud2 中 time/t 字段单位：0=秒，1=毫秒，2=微秒，3=纳秒。
+                                     # 必须根据驱动实际字段设置，否则逐点去畸变会使用错误时间尺度。
+    blind: 2                         # 近距离盲区，单位为米；小于该距离的点会被忽略。
+
+mapping:
+    acc_cov: 0.1                     # 加速度计过程噪声参数。
+    gyr_cov: 0.1                     # 陀螺仪过程噪声参数。
+    b_acc_cov: 0.0001                # 加速度计零偏随机游走参数。
+    b_gyr_cov: 0.0001                # 陀螺仪零偏随机游走参数。
+    fov_degree:    180               # 局部地图管理视场角，单位为度。
+    det_range:     100.0             # 局部地图管理采用的探测范围，单位为米。
+    extrinsic_est_en:  false         # 是否在线估计 Velodyne 与外部 IMU 之间的外参。
+    extrinsic_T: [ 0, 0, 0.28]       # 雷达到 IMU 的平移外参 [x, y, z]，单位为米。
+    extrinsic_R: [ 1, 0, 0,                        # 雷达到 IMU 的旋转矩阵，按行排列。
+                   0, 1, 0,
+                   0, 0, 1]
+
+publish:
+    path_en:  false                  # 是否发布 /path 估计轨迹。
+    scan_publish_en:  true           # 是否发布全局坐标系下的配准点云。
+    dense_publish_en: true           # 是否发布稠密配准点云；关闭可减少发布点数。
+    scan_bodyframe_pub_en: true      # 是否发布 IMU 机体坐标系下的配准点云。
+
+pcd_save:
+    pcd_save_en: true                # 是否保存累计 PCD 地图。
+    interval: -1                     # 每个文件保存的雷达帧数；-1 表示全部帧写入一个文件。
+                                     # 长距离数据建议分段保存，避免内存和单文件体积过大。

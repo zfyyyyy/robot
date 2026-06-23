@@ -1,0 +1,12 @@
+build/
+devel/
+install/
+.cache/
+.vscode/
+*.bag
+*.pcd
+*.log
+*.tmp
+*.zip
+*.tar
+*.tar.gz

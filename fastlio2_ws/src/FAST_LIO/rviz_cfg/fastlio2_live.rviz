@@ -1,0 +1,143 @@
+Panels:
+  - Class: rviz/Displays
+    Help Height: 0
+    Name: Displays
+    Property Tree Widget:
+      Expanded:
+        - /Global Options1
+        - /Live mapping cloud1
+        - /Path1
+        - /Odometry1
+      Splitter Ratio: 0.5
+    Tree Height: 600
+  - Class: rviz/Views
+    Expanded:
+      - /Current View1
+    Name: Views
+    Splitter Ratio: 0.5
+Preferences:
+  PromptSaveOnExit: false
+Toolbars:
+  toolButtonStyle: 2
+Visualization Manager:
+  Class: ""
+  Displays:
+    - Alpha: 0.35
+      Cell Size: 5
+      Class: rviz/Grid
+      Color: 100; 100; 100
+      Enabled: true
+      Line Style:
+        Line Width: 0.03
+        Value: Lines
+      Name: Grid
+      Plane: XY
+      Plane Cell Count: 40
+      Reference Frame: <Fixed Frame>
+      Value: true
+    - Alpha: 1
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 10
+        Min Value: -10
+        Value: true
+      Axis: Z
+      Channel Name: intensity
+      Class: rviz/PointCloud2
+      Color: 80; 255; 120
+      Color Transformer: FlatColor
+      Decay Time: 20
+      Enabled: true
+      Invert Rainbow: false
+      Max Color: 255; 255; 255
+      Min Color: 0; 0; 0
+      Name: Live mapping cloud
+      Position Transformer: XYZ
+      Queue Size: 20
+      Selectable: true
+      Size (Pixels): 4
+      Size (m): 0.15
+      Style: Flat Squares
+      Topic: /cloud_registered_display
+      Unreliable: false
+      Use Fixed Frame: true
+      Use rainbow: true
+      Value: true
+    - Alpha: 1
+      Buffer Length: 1
+      Class: rviz/Path
+      Color: 255; 60; 60
+      Enabled: true
+      Head Diameter: 0.3
+      Head Length: 0.2
+      Length: 0.3
+      Line Style: Lines
+      Line Width: 0.15
+      Name: Path
+      Offset:
+        X: 0
+        Y: 0
+        Z: 0
+      Pose Color: 255; 60; 60
+      Pose Style: None
+      Radius: 0.03
+      Topic: /path
+      Unreliable: false
+      Value: true
+    - Angle Tolerance: 0.01
+      Class: rviz/Odometry
+      Enabled: true
+      Keep: 1
+      Name: Odometry
+      Position Tolerance: 0.01
+      Shape:
+        Alpha: 1
+        Color: 255; 180; 0
+        Head Length: 0.5
+        Head Radius: 0.25
+        Shaft Length: 1
+        Shaft Radius: 0.1
+        Value: Arrow
+      Topic: /Odometry
+      Unreliable: false
+      Value: true
+  Enabled: true
+  Global Options:
+    Background Color: 0; 0; 0
+    Default Light: true
+    Fixed Frame: camera_init
+    Frame Rate: 30
+  Name: root
+  Tools:
+    - Class: rviz/Interact
+      Hide Inactive Objects: true
+    - Class: rviz/MoveCamera
+    - Class: rviz/Select
+    - Class: rviz/FocusCamera
+    - Class: rviz/Measure
+  Value: true
+  Views:
+    Current:
+      Class: rviz/Orbit
+      Distance: 50
+      Focal Point:
+        X: 0
+        Y: 0
+        Z: 0
+      Focal Shape Fixed Size: true
+      Focal Shape Size: 0.05
+      Invert Z Axis: false
+      Name: Current View
+      Near Clip Distance: 0.1
+      Pitch: 0.8
+      Target Frame: body
+      Value: Orbit (rviz)
+      Yaw: 0.8
+    Saved: ~
+Window Geometry:
+  Height: 900
+  Width: 1400
+  X: 40
+  Y: 40
+  Hide Left Dock: false
+  Hide Right Dock: false

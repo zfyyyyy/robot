@@ -1,0 +1,35 @@
+common:
+    lid_topic:  "/livox/lidar"       # 激光雷达输入话题。
+    imu_topic:  "/livox/imu"         # IMU 输入话题。
+    time_sync_en: false               # 仅在无法进行外部雷达与 IMU 时间同步时启用。
+    time_offset_lidar_to_imu: 0.0     # 雷达相对 IMU 的标定时间偏移，单位为秒，例如可通过 LI-Init 获取。
+                                      # 无论是否启用时间同步，此值都会生效；偏移未知时保持为 0.0。
+
+preprocess:
+    lidar_type: 1                     # 雷达类型：1 = Livox，2 = Velodyne，3 = Ouster。
+    scan_line: 6                      # 激光雷达扫描线数量。
+    blind: 4                          # 忽略雷达附近此距离内的点，单位为米。
+
+mapping:
+    acc_cov: 0.1                      # 加速度计过程噪声参数。
+    gyr_cov: 0.1                      # 陀螺仪过程噪声参数。
+    b_acc_cov: 0.0001                 # 加速度计零偏随机游走参数。
+    b_gyr_cov: 0.0001                 # 陀螺仪零偏随机游走参数。
+    fov_degree:    90                 # 局部地图管理使用的雷达视场角，单位为度。
+    det_range:     450.0              # 局部地图管理使用的雷达探测范围，单位为米。
+    extrinsic_est_en:  false          # 是否在线估计雷达与 IMU 之间的外参。
+    extrinsic_T: [ 0.04165, 0.02326, -0.0284 ]  # 雷达到 IMU 的平移外参，单位为米。
+    extrinsic_R: [ 1, 0, 0,                         # 雷达到 IMU 的旋转矩阵，按行排列。
+                   0, 1, 0,
+                   0, 0, 1]
+
+publish:
+    path_en:  false                   # 是否通过 /path 话题发布估计轨迹。
+    scan_publish_en:  true            # 是否发布全局坐标系下的配准点云。
+    dense_publish_en: true            # 是否发布稠密配准点云；设为 false 时发布较少的点。
+    scan_bodyframe_pub_en: true       # 是否发布 IMU 机体坐标系下的配准点云。
+
+pcd_save:
+    pcd_save_en: true                 # 是否将累计点云地图保存为 PCD 文件。
+    interval: -1                      # 每个 PCD 文件保存的雷达帧数。
+                                      # 设为 -1 时将所有帧保存到一个文件；数据量过大时可能耗尽内存。
